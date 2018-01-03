@@ -1,0 +1,130 @@
+﻿@{
+    Layout = "~/Views/Shared/_IndexingLayout.cshtml";
+    ViewBag.Title = "Indexing";
+}
+
+<link href="~/Content/css/compiled/Indexing.css" rel="stylesheet" />
+
+<div class="wrapper">
+    <div id="metadata-section">
+        
+        <div class="form-page">
+            <div class="form-wrapper">
+                <form id="meta-data-form">
+                    <div class="field-box document-group-wrapper">
+                        <label class="light">Document Group</label>
+                        <select data-bind="value: DocumentGroup" name="documentGroup" id="document-group" class="document-group select">
+                            <option value=""></option>
+                        </select>
+                        <div class="warning">
+                            <span class="alert-msg"><i class="icon-warning-sign"></i>No document group was found</span>
+                        </div>
+                        <div class="error">
+                            <span class="alert-msg"><i class="icon-remove-sign"></i>Select a document category</span>
+                        </div>
+                    </div>
+
+                    <div class="field-box document-type-wrapper">
+                        <label class="light">Document Type</label>
+                        <select data-bind="value: DocumentType" name="documentType" id="docType" class="document-type select">
+                            <option value=""></option>
+                        </select>
+                        <div class="warning">
+                            <span class="alert-msg"><i class="icon-warning-sign"></i>No document type was found</span>
+                        </div>
+                        <div class="error">
+                            <span class="alert-msg"><i class="icon-remove-sign"></i>Select a document type</span>
+                        </div>
+                    </div>
+                    <div class="field-box document-tag-wrapper">
+                        <label class="light">Document Tag</label>
+                        <select data-bind="value: DocumentTags" name="documentTags" multiple class="document-tag select">
+                            <option value=""></option>
+                        </select>
+                        <div class="warning">
+                            <span class="alert-msg"><i class="icon-warning-sign"></i> <span id="error-message"></span></span>
+                        </div>
+                    </div>
+                    <div class="field-box customer-wrapper">
+                        <label class="light">Search Customer</label>
+                        <input autocomplete="Off" name="documentOwner" data-bind="value: DocumentOwner" id="customers" class="form-control textbox" type="text" placeholder="Customer #, Customer Name" />
+                        <div class="search-results">
+                            <ul style="width: 100%;"></ul>
+                        </div>
+                        <div class="warning">
+                            <span class="alert-msg"><i class="icon-warning-sign"></i>Sorry, no matching customer found</span>
+                        </div>
+                        <div class="error">
+                            <span class="alert-msg"><i class="icon-remove-sign"></i>Please provide the customer details</span>
+                        </div>
+                    </div>
+                    <div class="field-box">
+                        <label class="light">Account Number</label>
+                        <select  data-bind="value: AccountNumber" name="accountNumber" multiple class="account-number select">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <div class="field-box title-wrapper">
+                        <label class="light">Document Title</label>
+                        <input data-bind="value: Description" name="description" class="textbox form-control" id="document-title" type="text" placeholder="" />
+                        <div class="error">
+                            <span class="alert-msg"><i class="icon-remove-sign"></i>Please provider the document title</span>
+                        </div>
+                    </div>
+                    <div class="field-box">
+                        <div class="pull-left">
+                            <input type="button" id="submit-button" data-bind="click: btnCreateDocIndex" class="btn-flat resized" value="Save" />
+                        </div>
+                        <div class="pull-right">
+                            <input type="button" class="btn-flat inverse resized" id="previous-button" value="Previous" />
+                            <input type="button" class="btn-flat inverse resized" id="next-button" value="Next" />
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="field-box" id="message"></div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="document-container">
+        <!-- upper main stats -->
+        <div id="main-stats">
+            <div class="row stats-row">
+                @*<div class="col-md-6 col-sm-6 stat">
+                    <div class="data">
+                        <span class="number">3240</span>
+                        users
+                   
+                    </div>
+                    <span class="date">February 2013</span>
+                </div>*@
+                <div class="col-md-12 col-sm-12 stat">
+                    <div class="data">
+                        <span class="number">3240</span>
+                        pending
+                    </div>
+                    <span class="date">Current file</span>
+                </div>
+            </div>
+        </div>
+        <!-- end upper main stats -->
+
+        <!-- Document Viewer -->
+        <div id="document-viewer">
+            <iframe src="" id="doc"></iframe>
+            <div id="docPath"></div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+</div>
+
+<script src="~/Scripts/ViewModels/DocumentIndexing/CreateDocumentIndex.js"></script>
+<script src="~/Scripts/knockout-2.2.0.js"></script>
+

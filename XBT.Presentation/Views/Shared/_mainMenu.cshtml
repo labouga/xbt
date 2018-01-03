@@ -1,0 +1,59 @@
+﻿<ul id="dashboard-menu">
+    <li class="">
+        @if (ViewBag.Section == "Dashboard")
+        {
+            <div class="pointer">
+                <div class="arrow"></div>
+                <div class="arrow_border"></div>
+            </div>
+        }
+        <a href="">
+            <i class="icon-home"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+    <li class="@(ViewBag.Section == "Documents" ? "active" : "")">
+        @if (ViewBag.Section == "Documents")
+        {
+            <div class="pointer">
+                <div class="arrow"></div>
+                <div class="arrow_border"></div>
+            </div>
+        }
+
+        <a class="dropdown-toggle" href="#">
+            <i class="icon-file"></i>
+            <span>Documents</span>
+            <i class="icon-chevron-down"></i>
+        </a>
+        <ul class="submenu">
+            <li>
+                @Html.ActionLink("My Documents", "MyDocuments", "Documents", new { Area = "DigitalArchive" }, new { })
+            </li>
+            <li>
+                @Html.ActionLink("Add Documents", "Create", "Documents", new { Area = "DigitalArchive" }, new { })
+            </li>
+        </ul>
+    </li>
+    <li class="">
+        
+        @if (ViewBag.Section == "Settings")
+        {
+            <div class="pointer">
+                <div class="arrow"></div>
+                <div class="arrow_border"></div>
+            </div>
+        }
+
+        <a class="dropdown-toggle" href="#">
+            <i class="icon-cogs"></i>
+            <span>Settings</span>
+            <i class="icon-chevron-down"></i>
+        </a>
+        <ul class="submenu">
+            <li><a href="">Document Groups</a></li>
+            <li><a href="">Document Types</a></li>
+            <li><a href="">Document Tags</a></li>
+        </ul>
+    </li>
+</ul>

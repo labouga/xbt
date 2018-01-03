@@ -1,0 +1,378 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using XBT.Business;
+using XBT.Business.Document_Archiving;
+using XBT.Data;
+using XBT.Model;
+
+namespace XBT.Presentation.Areas.DigitalArchive.Controllers
+{
+  /// <summary>
+  /// Contains methods (actions) responsible for creating, editing, deleting, previewing and listing of documents
+  /// </summary>
+  public class DocumentsController : Controller
+  {
+    private DocumentArchivingProcess _documentArchivingProcess;
+    private DocumentTypeBL _documentTypeBL;
+    private CustomerBL _customerBL;
+    private XbtContext uow;
+
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    public DocumentsController()
+    {
+<<<<<<< HEAD
+      _documentArchivingProcess = new DocumentArchivingProcess();
+      _documentTypeBL = new DocumentTypeBL();
+      _customerBL = new CustomerBL();
+      uow = new XbtContext();
+    }
+    /// <summary>
+    /// Retrieves all documents
+    /// </summary>
+    /// <returns>IEnumerable list of documents</returns>
+    ///
+    /// GET: /DigitalArchive/Documents/MyDocuments/
+    /// 
+    [HttpGet]
+    public ActionResult MyDocuments()
+    {
+      return View();
+    }
+=======
+        private DocumentArchivingProcess _documentArchivingProcess;
+        private DocumentTypeBL _documentTypeBL;
+        private CustomerBL _customerBL;
+        private XbtContext uow;
+
+        private bool active = false;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public DocumentsController()
+        {
+            _documentArchivingProcess = new DocumentArchivingProcess();
+            _documentTypeBL = new DocumentTypeBL();
+            _customerBL = new CustomerBL();
+            uow = new XbtContext();
+        }
+        /// <summary>
+        /// Retrieves all documents
+        /// </summary>
+        /// <returns>IEnumerable list of documents</returns>
+        ///
+        /// GET: /DigitalArchive/Documents/MyDocuments/
+        /// 
+        [HttpGet]
+        public ActionResult MyDocuments()
+        {
+            ViewBag.Section = "Documents";
+            return View();
+        }
+>>>>>>> d59e5bbbd97233caf3241cc029383a5e8c52bc32
+
+    [HttpGet]
+    public JsonResult FetchMyDocuments()
+    {
+      var myDocuments = _documentArchivingProcess.GetMyDocuments();
+
+      var docs = new List<object>();
+
+      foreach (var doc in myDocuments)
+      {
+        docs.Add(new
+        {
+          SerialNo = doc.SerialNo,
+          Description = doc.Description,
+          DocumentType = doc.DocumentType.Name,
+          DocumentTags = "Current Account, Savings Account",
+          DateCreated = doc.DateCreated.ToString("D", new CultureInfo("nb-NO"))
+        });
+      }
+
+
+      return Json(docs.ToList(), JsonRequestBehavior.AllowGet);
+    }
+
+    /// ========================================================
+    /// Document Creation methods
+    /// ========================================================
+
+<<<<<<< HEAD
+    /// <summary>
+    /// Displays the document creation form
+    /// </summary>
+    /// <returns>The document create view</returns>
+    [HttpGet]
+    public ActionResult Create()
+    {
+      return View();
+    }
+=======
+        /// <summary>
+        /// Displays the document creation form
+        /// </summary>
+        /// <returns>The document create view</returns>
+        [HttpGet]
+        public ActionResult Create()
+        {
+            ViewBag.Section = "Documents";
+            return View();
+        }
+>>>>>>> d59e5bbbd97233caf3241cc029383a5e8c52bc32
+
+    /// <summary>
+    /// Handles creation of the document process
+    /// </summary>
+    /// <param name="document">document</param>
+    /// <returns>json response as either a success or failure</returns>
+    [HttpPost]
+    public JsonResult Create(
+        string documentType,
+        string documentTags,
+        string documentOwner,
+        string acountNumber,
+        string description)
+    {
+      string[] tagList = null;
+
+      var type = new GenericRepository<DocumentType>(uow);
+      var docType = type.Get(includeProperties: "DocumentGroup").FirstOrDefault(d => d.Id == Int32.Parse(documentType));
+
+      var docOwner = _customerBL.GetCustomer(Int32.Parse(documentOwner.Split(',')[0]));
+
+      // Extract documentTag values from documentTags string if it is not empty or null
+      var docTags = new List<DocumentTag>();
+
+      if (!String.IsNullOrEmpty(documentTags))
+      {
+        tagList = documentTags.Split(',');
+
+        var docTagList = _documentArchivingProcess.GetDocumentTagsInDocumentType(docType.Id);
+        foreach (var tag in tagList.ToList())
+        {
+          var docTag = docTagList.FirstOrDefault(d => d.Id == Int32.Parse(tag));
+          docTags.Add(docTag);
+        }
+      }
+
+      var document = new Document()
+      {
+        DocumentType = docType,
+        Description = description,
+        DocumentOwner = docOwner,
+        DocumentTags = docTags
+      };
+
+      //Save document 
+      var result = _documentArchivingProcess.SaveDocument(document);
+
+      return Json(result ? 1 : 0, JsonRequestBehavior.AllowGet);
+    }
+
+
+    /// ========================================================
+    /// Document Edit methods
+    /// ========================================================
+
+    /// <summary>
+    /// Displays the form for editing a document
+    /// </summary>
+    /// <returns>The document edit view</returns>
+
+<<<<<<< HEAD
+    [HttpGet]
+    public ActionResult Edit(int id = 0)
+    {
+      return View();
+    }
+=======
+
+        #region Customer Documents
+
+        /// <summary>
+        /// Displays all the customer documents
+        /// </summary>
+        /// <param name="customerNumber"></param>
+        /// <returns>customer documents</returns>
+        public ActionResult CustomerDocuments(int customerNumber = 0)
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Retrieves all the documents for a customer
+        /// </summary>
+        /// <param name="customerNumber"></param>
+        /// <returns>json object for customer documents</returns>
+        public JsonResult GetAllCustomerDocuments(int customerNumber = 0)
+        {
+            // Get the customer documents
+
+            // TODO: Implement the filter
+            var customerDocuments = _customerBL.GetCustomerDocuments(customerNumber);
+
+            var docs = new List<object>();
+
+            foreach (var doc in customerDocuments)
+            {
+                docs.Add(new
+                {
+                    SerialNo = doc.SerialNo,
+                    Description = doc.Description,
+                    DocumentType = doc.DocumentType.Name,
+                    DocumentTags = "Current Account, Savings Account",
+                    DateCreated = doc.DateCreated.ToString("D", new CultureInfo("nb-NO"))
+                });
+            }
+
+            return Json(docs.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region document navigation
+>>>>>>> d59e5bbbd97233caf3241cc029383a5e8c52bc32
+
+    /// <summary>
+    /// Handles the processes and logic of editing a document
+    /// </summary>
+    /// <param name="document"></param>
+    /// <returns>The view of the edited document</returns>
+    [HttpPost]
+    public ActionResult Edit(Document document)
+    {
+      return View();
+    }
+
+
+    /// ========================================================
+    /// Document Deletion methods
+    /// ========================================================
+
+    /// <summary>
+    /// Handles the processes and logic of deleting a document
+    /// </summary>
+    /// <param name="documentId"></param>
+    /// <returns>a message indication whether the document was deleted or not</returns>
+    [HttpPost]
+    public JsonResult Delete(int documentId = 0)
+    {
+      return Json("", JsonRequestBehavior.AllowGet);
+    }
+
+
+    /// ========================================================
+    /// Document Details method
+    /// ========================================================
+
+    /// <summary>
+    /// Retrieves the details of a document
+    /// </summary>
+    /// <param name="documentId"></param>
+    /// <returns>A view of the document details</returns>
+    public ActionResult Document(int documentId = 0)
+    {
+      return View();
+    }
+
+    #region document navigation
+
+    /// <summary>
+    /// Retreives a queue of files names from the selected directory and adds it to the Cache object
+    /// for sequential access i.e one by one
+    /// </summary>
+    /// <param name="documentTypeId"></param>
+    /// <returns>Json result indicating wthether files where found or not</returns>
+    public ActionResult GetFileList(int documentTypeId = 0)
+    {
+      string message = "";
+      Object result = null;
+
+      //retreive queue from Cache
+      var cachedFileQueue = GetFileListQueue(documentTypeId);
+
+      //if there are files in the queue
+      if (cachedFileQueue.Count > 0)
+      {
+        message = "";
+        result = new { Result = "true", message };
+      }
+      else
+      {
+        message = "No documents found in selected directory";
+        result = new { Result = "false", message };
+      }
+
+      return Json(result, JsonRequestBehavior.AllowGet);
+    }
+
+    public FileResult FetchNextDocument(int documentTypeId)
+    {
+      //Retrieve queue
+      var documentType = _documentTypeBL.GetDocumentTypeById(documentTypeId);
+
+      var fileListQueue = GetFileListQueue(documentTypeId);
+
+
+      if (fileListQueue.Count > 0)
+      {
+        //Fetch next file name in the queue
+        var fileToRetrieveName = fileListQueue.Dequeue();
+
+        //Retrieve directory where the files are stored
+        var documentTypeFilesDirectory = Path.GetFullPath(documentType.DocumentDirectory);
+        var absoluteFilePath = Path.GetFullPath(Path.Combine(documentType.DocumentDirectory, fileToRetrieveName));
+
+        //Ensure that file name retrieved exists
+        //TODO: Exception handling for IO operations
+        if (System.IO.File.Exists(absoluteFilePath))
+        {
+          //Otherwise return file to client
+          const string contentType = "application/pdf";
+          return File(absoluteFilePath, contentType);
+        }
+      }
+
+      //TODO: Explorer different status messages to send to client
+      return null;
+    }
+
+  #endregion
+
+    #region Helper methods
+
+    /// <summary>
+    /// Helper methos for retreiving a queue of files names from the selected directory and adds it to the Cache object
+    /// for sequential access i.e one by one
+    /// </summary>
+    /// <param name="documentTypeId"></param>
+    /// <returns>Queue of file names</returns>
+    private Queue<string> GetFileListQueue(int documentTypeId)
+    {
+      //Create cache for fileName queue for selected document type 
+      var documentType = _documentTypeBL.GetDocumentTypeById(documentTypeId);
+
+      if (HttpRuntime.Cache.Get(documentType.Name) == null)
+      {
+        //Retreive queue //TODO: Potential return of no values
+        Queue<string> fileQueue = _documentArchivingProcess.GetFileNamesInDirectory(documentTypeId);
+        HttpRuntime.Cache.Insert(documentType.Name, fileQueue);
+      }
+
+      //retreive queue from Cache 
+      return (Queue<string>)HttpRuntime.Cache.Get(documentType.Name);
+    }
+
+    
+    #endregion
+  }
+}

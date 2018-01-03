@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="XBT.Model.DocumentGroup">
+    <Position X="1.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AgACAAAAAAAgAAAAAAAAAAQAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>DocumentGroup.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="DocumentTypes" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="XBT.Model.DocumentType">
+    <Position X="1.75" Y="3.5" Width="2.25" />
+    <AssociationLine Name="DocumentTags" Type="XBT.Model.DocumentTag">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.221" Y="0.475" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AgACAAAAAAAwAAAABAAAAAQAAAAAAAACAAAEAAAAAAA=</HashCode>
+      <FileName>DocumentType.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Documents" />
+      <Property Name="DocumentTags" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="XBT.Model.DocumentTag">
+    <Position X="1.75" Y="7" Width="2.25" />
+    <AssociationLine Name="DocumentTypes" Type="XBT.Model.DocumentType" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="2.312" Y="7" />
+        <Point X="2.312" Y="6.017" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AgACAAAAAAAgAAAAAAAAAAQAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>DocumentTag.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="DocumentTypes" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="XBT.Model.Document">
+    <Position X="6" Y="3.5" Width="2.25" />
+    <AssociationLine Name="ChildDocuments" Type="XBT.Model.Document" ManuallyRouted="true">
+      <Path>
+        <Point X="6.798" Y="6.978" />
+        <Point X="6.798" Y="8.457" />
+        <Point X="7.468" Y="8.457" />
+        <Point X="7.468" Y="6.978" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AgADAAAABAggAgAAAAIAAAAAAAAAAAABAAAEAEBAAAA=</HashCode>
+      <FileName>Document.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="ChildDocuments" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="XBT.Model.DocumentOwner">
+    <Position X="10.5" Y="4.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>DocumentOwner.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Documents" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="XBT.Model.Customer">
+    <Position X="10.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACAAAAAAAAAAAAAAAAAQAAACAAAAAAAAAAg=</HashCode>
+      <FileName>Customer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,148 @@
+﻿
+DOCUMENT ARCHIVING BUSINESS REQUIREMENTS
+
+
+DOCUMENT ARCHIVING PROCESS (INDEXING)
+
+//////////////////////////////////////
+//
+//	Retrieve document groups
+//
+//////////////////////////////////////
+
+1. Retreive all document groups 
+2. If there are no document groups created, alert client 
+
+NB: Indexing process cannot proceed until document groups are created
+
+//////////////////////////////////////
+//
+//	Retrieve document types
+//
+//////////////////////////////////////
+
+1. Retreive document types in selected document group  
+2. If there are no document types in selected document group, alert client 
+
+NB: Indexing process cannot proceed until document types in selected document group are created
+
+
+//////////////////////////////////////
+//
+//	Retrieve documents in document type (for indexing)
+//
+//////////////////////////////////////
+
+1. Select document type 
+2. Retrieve documents file names for the selected document type and add them to a queue for this document type 
+
+NB: Various fail scenarios could happen here, e.g I/O fail, no files, wrong dir path configurations, network failure, permissions, session exprations etc
+		-	 Assign each document a unique GUID indentifier before adding to the queue
+		-  With a queue files are access using FIFO
+		-  The Queue will be persisted in an in-memory cash
+
+
+//////////////////////////////////////
+//
+//	Retrieve next document (Not a business class, more suited for a controller action) 
+//
+//////////////////////////////////////
+
+1. Retrieve queue of documents files names for selected document types. If it does not exist create and store it in an in-memory cash. We do not want to read a file list from disk every request
+2. Retrieve first document from the queue, and remove it from the queue
+3. Use file name retreived to read the file from disk 
+4. Serve file to the client. This file will be diplayed in the iframe of the browser
+
+
+
+//////////////////////////////////////
+//
+//	Retrieve previous document (This implementation has moved to the controllers
+//	because it is more suited for a controller action)
+//
+//////////////////////////////////////
+
+Needs rethinking. 
+
+//////////////////////////////////////
+//
+//	Save document (from scanned document storage location)
+//
+//////////////////////////////////////
+
+1. Validate document metadata
+2. Generate document serial number
+3. Generate security hash for the document and add value to entity metadata (This will help detect tampering with the document file, should the file be switched with another one)
+
+//4-7 to be handled in a transaction
+4. Move document from scanned document storage location to archive storage location 
+5. Save metadata to database (if 4 is successful)
+6. Remove document from queue and put it in the indexed documents stack (A stack allows LIFO access to objects)
+7. Alert client with outcome
+
+
+//////////////////////////////////////
+//
+//	Retrieve document (for viewing)
+//
+//////////////////////////////////////
+
+1. Retrieve document using unique GUID identifier
+2. Serve this document to the client 
+3. Alert request with outcome
+
+
+//////////////////////////////////////
+//
+//	Edit document 
+//
+//////////////////////////////////////
+
+1. Check existence of metadata in database
+2. Retrieve latest metadata
+3. Retreive document from file system if exists
+4. Alert request with outcome
+
+
+//////////////////////////////////////
+//
+//	Save changes to document 
+//
+//////////////////////////////////////
+
+1. Validate document metadata
+2. Check existence of document in database
+3. If successful, save changes to database
+		- Concurrency will be handled with "last in wins"
+		- New instance of document must be created and added as a child document to the previous versions
+4. Alert request with outcome
+
+
+//////////////////////////////////////
+//
+//	Delete document
+//
+//////////////////////////////////////
+
+1. Check if document exists. 
+2. Mark document for delete. Documents will not be physically deleted from database
+3. Alert client with outcome
+
+
+DOCUMENT RETRIEVAL PROCESS
+
+//////////////////////////////////////
+//
+//	Retrieve documents 
+//
+//////////////////////////////////////
+
+1. Retrieve document using owner unique identifier e.g customer #
+
+//////////////////////////////////////
+//
+//	Retrieve My documents 
+//
+//////////////////////////////////////
+
+1. Retrieve documents created by a user in the system using userID 

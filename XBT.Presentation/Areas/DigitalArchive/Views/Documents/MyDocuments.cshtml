@@ -1,0 +1,85 @@
+﻿@using System.Globalization
+@{
+    ViewBag.Title = "Documents";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/css/compiled/tables.css" rel="stylesheet" />
+
+<script src="~/Scripts/knockout-2.2.0.js"></script>
+
+<div class="header alert alert-white no-rounded-corners">
+    <h1 class="pull-left">My Documents</h1>
+    <!-- <div class="pull-right unindexed-docs">20 unindexed documents</div> -->
+    <div class="clearfix"></div>
+</div>
+
+<div id="pad-wrapper">
+    <div class="table-wrapper orders-table section">
+        <div class="row filter-block">
+            <div class="pull-left">
+                <input type="text" class="search document-search" placeholder="Search for a document.." />
+            </div>
+            <div class="pull-right">
+                <div class="btn-group pull-right">
+                    <button class="glow left large" id="all">All</button>
+                    <button class="glow middle large" id="pending">Pending</button>
+                    <button class="glow right large" id="completed">Completed</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="row">
+            <table id="documents" class="table table-hover" style="border-bottom: solid 1px #dddddd">
+                <thead>
+                    <tr>
+                        <th class="col-md-1">Serial #</th>
+                        <th class="col-md-3">
+                            <span class="line"></span>
+                            Document Title
+                        </th>
+                        <th class="col-md-2">
+                            <span class="line"></span>
+                            Document Type
+                        </th>
+                        <th class="col-md-2">
+                            <span class="line"></span>
+                            Document Tags
+                        </th>
+                        <th class="col-md-2">
+                            <span class="line"></span>
+                            Last Updated
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody data-bind="foreach: MyDocuments">
+                    <tr class="first">
+                        <td data-bind="text: SerialNo"></td>
+                        <td><a href="" data-bind="text: Description"></a></td>
+                        <td data-bind="text: DocumentType"></td>
+                        <td data-bind="text: DocumentTags"></td>
+                        <td data-bind="text: DateCreated"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="tfoot">
+                <div class="pull-left showing">Showing x - y of <span data-bind="text: MyDocuments().count"></span> documents</div>
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <a href="" class="btn btn-default">First</a>
+                        <a href="" class="btn btn-default">Previous</a>
+                        <a href="" class="btn btn-default">1</a>
+                        <a href="" class="btn btn-default">2</a>
+                        <a href="" class="btn btn-default">3</a>
+                        <a href="" class="btn btn-default">Next</a>
+                        <a href="" class="btn btn-default">Last</a>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/ViewModels/DocumentIndexing/MyDocuments.js"></script>

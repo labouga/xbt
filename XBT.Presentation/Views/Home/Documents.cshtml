@@ -1,0 +1,85 @@
+﻿@using System.Globalization
+@{
+    ViewBag.Title = "Documents";
+}
+<link href="~/Content/css/compiled/tables.css" rel="stylesheet" />
+
+<div class="header alert alert-info no-rounded-corners">
+    <h1 class="pull-left">My Documents</h1>
+    <div class="pull-right unindexed-docs">20 unindexed documents</div>
+    <div class="clearfix"></div>
+</div>
+
+<div id="pad-wrapper">
+    <div class="table-wrapper orders-table section">
+        <div class="row filter-block">
+            <div class="pull-left">
+                <input type="text" class="search document-search" placeholder="Search for a document.." />
+            </div>
+            <div class="pull-right">
+                <div class="btn-group pull-right">
+                    <button class="glow left large" id="all">All</button>
+                    <button class="glow middle large" id="pending">Pending</button>
+                    <button class="glow right large" id="completed">Completed</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="row">
+            <table id="documents" class="table table-hover" style="border-bottom: solid 1px #dddddd">
+                <thead>
+                    <tr>
+                        <th class="col-md-1">Serial #</th>
+                        <th class="col-md-4">
+                            <span class="line"></span>
+                            Document Title
+                        </th>
+                        <th class="col-md-1">
+                            <span class="line"></span>
+                            Document Type
+                        </th>
+                        <th class="col-md-2">
+                            <span class="line"></span>
+                            Document Tags
+                        </th>
+                        <th class="col-md-2">
+                            <span class="line"></span>
+                            Last Updated
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @for (int i = 450; i < 466; i++)
+                    {
+                        <tr class="first">
+                            <td>#@i</td>
+                            <td><a href="">Proforma Invoice for purchase of a laptop</a></td>
+                            <td>Proforma Invoice</td>
+                            <td>Invoice, laptop, proforma</td>
+                            <td>
+                                @DateTime.Now.ToLocalTime().ToString("D", new CultureInfo("nb-NO"))
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="tfoot">
+                <div class="pull-left showing">Showing x - y of z documents</div>
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <a href="" class="btn btn-default">First</a>
+                        <a href="" class="btn btn-default">Previous</a>
+                        <a href="" class="btn btn-default">1</a>
+                        <a href="" class="btn btn-default">2</a>
+                        <a href="" class="btn btn-default">3</a>
+                        <a href="" class="btn btn-default">Next</a>
+                        <a href="" class="btn btn-default">Last</a>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>

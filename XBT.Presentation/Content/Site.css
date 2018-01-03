@@ -1,0 +1,148 @@
+﻿/*--bootstrap--*/
+@import url("css/bootstrap/bootstrap.css");
+@import url("css/bootstrap/bootstrap-overrides.css");
+
+/*--Libraries--*/
+@import url("css/lib/jquery-ui-1.10.2.custom.css");
+@import url("css/lib/font-awesome.css");
+@import url("css/lib/select2.css");
+
+/*--global styles--*/
+@import url("css/compiled/layout.css");
+@import url("css/compiled/elements.css");
+@import url("css/compiled/icons.css");
+@import url("css/compiled/form-showcase.css");
+@import url("css/compiled/form-wizard.css");
+
+.select, .textbox, .textarea {
+    width: 100%;
+    color: #555555;
+}
+
+label.light {
+    display: block;
+    clear: both;
+    font-weight: normal;
+}
+
+input.resized {
+    width: 75px;
+}
+
+.textbox {
+    box-shadow: none;
+    height: 25px;
+    width: 100%;
+    font-size: 13px;
+    padding: 2px 6px;
+    border: 1px solid #d0dde9;
+    margin: 0;
+    border-radius: 2px;
+}
+
+.main-content {
+    float: right;
+}
+
+
+.document-container {
+    float: left;
+    width: 80%;
+    background: #ffffff;
+}
+
+#metadata-section {
+    float: left;
+    z-index: 9999;
+    background-color: #f7f7f7;
+    padding: 0 20px 0 20px;
+    border-right: 1px solid #f1f1f1;
+    width: 20%;
+    box-shadow: 1px 1px 4px 1px #e9e9e9;
+}
+
+#doc {
+    overflow: auto;
+    margin: 0;
+    background: #ffffff;
+    border: 0;
+    width: 100%;
+}
+
+#docPath {
+    height: 20px;
+    padding: 5px;
+    width: 100%;
+    background: #F1F1F1;
+    margin-top: -5px;
+}
+
+/* The document-type-wrapper and document-tag-wrapper should be hidden by default */
+.document-type-wrapper,
+.document-tag-wrapper {
+    display: block;
+}
+
+/* Document Indexing Form-specific styles */
+/* All warnings and errors must be hidden by default */
+.document-group-wrapper .warning, 
+.document-group-wrapper .error,
+.document-type-wrapper .warning, 
+.document-type-wrapper .error,
+.document-tag-wrapper .warning, 
+.title-wrapper .error,
+.customer-wrapper .warning, 
+.customer-wrapper .error  {
+    display: none;
+}
+
+.general-error {
+    margin-top: 10px;
+}
+
+/* Customer search results */
+.search-results {
+    display: none;
+    z-index: 1000;
+    border: solid 1px #EFEFEF;
+    position: absolute;
+    min-width: 15%;
+    max-height: 150px;
+    overflow: auto;
+    background: #FFFFFF;
+    box-shadow: 1px 1px 1px 1px #f1f1f1;
+}
+
+.search-results ul {
+    margin: 0;padding: 0;
+    list-style: none;
+}
+.search-results ul li {
+    padding: 2px 5px;
+    cursor: pointer;
+}
+.search-results ul li:hover {
+    color: #cccccc;
+}
+
+/* Document Viewer should be hidden by default */
+#document-viewer {
+    display: block;
+}
+
+.navbar-brand h1 {
+    text-transform: uppercase;
+    color: white;
+    font-size: 22px;
+    font-weight: 700;
+}
+.navbar-brand h1 i {
+    margin-right: 10px;
+}
+.navbar-brand h1 span {
+    font-weight: normal;
+}
+
+#message {
+    display: none;
+}
